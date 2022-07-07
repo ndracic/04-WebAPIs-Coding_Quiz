@@ -26,6 +26,12 @@ body {
 .quiz_box{
     display: none;
 }
+.question-text{
+    margin: 5px;
+    border-bottom: 2px darkorchid;
+    font-size: larger;
+}
+
 .result-box {
     display: none;
     margin: 10px;
@@ -35,27 +41,27 @@ body {
     font-size: 20px;
 }
 
-.option {
+.option1, .option2, .option3, .option4 {
     padding: 5px;
     margin: 10px;
     width: 100%;
     background-color: rgb(235, 216, 244);
 }
-.option1{
+.option1, .option2, .option3, .option4 {
     margin: 2px;
     margin-bottom: 10px;
     padding: 10px;
     color: white;
     background-color: blueviolet;
-    display: block;
+    display: flexbox;
 }
 
-.option:hover {
+.option1:hover, .option2:hover, .option3:hover, .option4:hover {
     background-color: aliceblue;
     color: blueviolet;
 }
 
-.option:active{
+.option1:active, .option3:active, .option4:active, .option2:active{
     background-color: darkorchid;
     border: rgb(235, 216, 244);
     color: aliceblue;

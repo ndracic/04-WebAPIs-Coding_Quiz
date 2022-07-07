@@ -51,6 +51,7 @@ var questions = [
 
 //get required elements
 var startbutton = document.querySelector('.start-btn')
+var tryAgain = document.querySelector('.retry')
 var quiz = document.querySelector('.quiz_box')
 var info = document.querySelector('.start-quiz')
 var result = document.querySelector('.result-box')
@@ -69,6 +70,7 @@ var option4 = document.querySelector('.option4')
 var score = 0
 var quecounter = 0
 var timeLeft = 60
+var options;
 
 //when start quiz button is pressed show instructions
 startbutton.addEventListener("click", function(){
@@ -78,7 +80,7 @@ startbutton.addEventListener("click", function(){
     countdown();
     for(var i = 0; i<4; i++){
         var option = document.querySelector(`.option${i+1}`)
-        option.innerText = questions[quecounter].options[i]
+        option.innerText = questions[quecounter].options[i];
         if (questions[quecounter].options[i]== questions[quecounter].answer) {
             option.value = true
         } else {
@@ -127,6 +129,7 @@ function countdown() {
             timeLeft--;
             quiz.style.display ='none';
             result.style.display = 'block';
+            showResult();
             clearInterval(timeInterval);
         } else {
             time.textContent = '';
@@ -134,19 +137,50 @@ function countdown() {
             sendMessage();
             }
         }, 1000);
-        }
+    }
 
-//when the timer is up the app is ended abruptly
-function sendMessage() {
-    var timesUp =  setInterval(function(){
-        if (timeLeft===0) {
-            clearInterval(timeInterval)
-            quiz.style.display ='none';
-            result.style.display = 'block';
-        }
-    })
+function saveGrade() {
+var overall = {
+    student: student.value.trim(),
+    score: score.value,
+    }
+    localStorage.setItem("overall",JSON.stringify(overall));
 }
 
+var scoreTag = document.querySelector('.scoreTag')
+function renderScore(){
+    var lastScore = JSON.parse(localStorage.getItem("overall"))
+    if (score > 3) {
+    let scoreText = '<span>and congrats! , You got <p>'+ score +'</p> out of <p>'+ questions.length +'</p></span>';
+        scoreTag.innerHTML = lastScore;
+        result.textContent = lastScore
+    } else if (score > 1) {
+        var scoreText = 'You got <p>'+ score + '</p> out of <p>'+ questions.length + '</p>';
+        scoreTag.innerHTML = lastScore
+    } else {
+        var scoreText = 'Sorry, you only got <p>'+ score + '</p> out of <p>'+ questions.length + '</p>';
+        scoreTag.innerHTML = lastScore
+    }
+}
+
+saveResults.addEventListener("click", function(event) {
+    event.preventDefault();
+    saveGrade();
+})
+
+function saveGrade() {
+    var overall = {
+        student: student.value,
+
+    }
+}
+
+tryAgain.addEventListener("click", function(){
+    console.log('')
+    quiz.style.display ='none';
+    result.style.display ='none';
+    info.style.display = 'block';
+})
 // Save related form data as an object
-saveResults
+
 
