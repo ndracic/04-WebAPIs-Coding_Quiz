@@ -7,44 +7,62 @@
     <link rel="stylesheet" href="./assets/style.css">
     <title>Coding Quiz</title>
 </head>
+
 <body>
-    <header> 
-        <h1>Coding Quiz</h1>
-    </header>
-    
-    <div class="Begin">
-        <div class="start-page">
-            <h2 class="intro" id="instructions"> Press the Start button to begin the quiz. You will have 60 seconds to complete this 5 question multiple choice questionaire.</h2>
-            <button class="start-Btn">Start Quiz</button>
-        </div>
-    </div>
 
-    <div class="main"> 
-        <!-- start quiz button -->
+    <header><h1>Coding Quiz</h1></header>
 
-        
-        <div> Seconds Left: <span class="countdown">60</span></div>
-        
-        <div class="question-container" id="question">
-            <!-- question goes here -->
-        </div>
-        
-        <div class="option-container">
-            <!-- <button class="option" onclick="" id="op1">A)</button>
-                <button class="option" id="op2">B)</button>
-                <button class="option" id="op3">C)</button>
-                <button class="option" id="op4">D)</button> -->
+    <!-- start quiz -->
+    <div class="start-quiz"> 
+        <div class="info_box">
+            <div class="info">
+                <div class="info-list">
+                    <div class="info">1) Press the Start button to begin the quiz. You will have 60 seconds to complete this 5 question multiple choice quiz about coding.</div>
+                    <div class="info">2) Once you select an answer you will be graded based on your decision and the following question will appear.</div>
+                </div>
             </div>
-            
-            <div class="navigation">
-                <!-- <button class="Previous">Previous</button>
-                    <button class="Next">Next</button> -->
-
-        <div class="result"></div>
         </div>
-      </div>
+        <div class="start"><button class="start-btn">Start Quiz</button></div>
     </div>
+    
+
+    <div class="quiz_box"> 
+        <header>
+            <div class="timer">
+                <div class="time_left_text">Seconds left:</div>
+                <div class="timer_sec">60</div>
+            </div>
+        </header>
+
+        <section>
+            <div class="question-text">
+            <!-- question goes here added in JS-->
+            </div>
+            <div class="option-list">
+            <!-- inserted in JS -->
+            <button class="option1"></button>
+            <button class="option2"></button>
+            <button class="option3"></button>
+            <button class="option4"></button>
+            </div>
+        </section>
+        
+    </div>
+
+    <div class="result-box">
+        <div class="completed-text">You've completed the quiz!</div>
+
+        <div class="score_text">
+            <!-- results go here -->
+        </div>
+        
+        <div class="save-results"><input class="abbr" type="text" id="initials" placeholder="Type your initials"><button class="save-btn">Save Results!</button></div>
+       
+        <div class="try-again"><button class="retry">Retry</button></div>
+    </div>
+        
 
     <script src="./assets/script.js"></script>
+    <script src="./assets/questions.js"></script>
 </body>
 </html>

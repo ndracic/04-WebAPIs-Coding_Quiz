@@ -15,7 +15,7 @@ body {
     text-align: center;
 }
 
-.question-container {
+.quiz_box, .info_box {
     margin: 10px;
     padding: 5px;
     width: 100%;
@@ -23,8 +23,11 @@ body {
     font-size: larger;
     text-align: center;
 }
-
-.result {
+.quiz_box{
+    display: none;
+}
+.result-box {
+    display: none;
     margin: 10px;
     padding: 5px;
     width: 100%;
@@ -32,13 +35,13 @@ body {
     font-size: 20px;
 }
 
-.option-container {
+.option {
     padding: 5px;
     margin: 10px;
     width: 100%;
     background-color: rgb(235, 216, 244);
 }
-.option{
+.option1{
     margin: 2px;
     margin-bottom: 10px;
     padding: 10px;
@@ -58,7 +61,7 @@ body {
     color: aliceblue;
 }
 
-.Next, .Previous {
+.Next, .start-btn, .save-btn, .retry, .abbr {
     width: 10%;
     padding: 5px;
     margin: 10px;
@@ -66,10 +69,14 @@ body {
     background-color: aliceblue;
     border-color: blueviolet;
 }
-.Next:hover, .Previous:hover {
+.Next:hover, .start-btn:hover, .save-btn:hover, .retry:hover, .start-btn:hover {
     background-color: darkorchid;
     color: aliceblue;
 }
-.Next:active, .Previous:active{
+.Next:active, .start-btn:active, .save-btn:active, .retry:active, .start-btn:active {
     border: 2px rgb(235, 216, 244);
+}
+
+div.quiz_box.result {
+    display: none;
 }

@@ -1,65 +1,135 @@
-var timer = document.getElementById('countdown')
-var main = document.getElementById('main')
-var nextQ = document.getElementById('next')
-var prev = document.getElementById('previous')
-var score = document.getElementById('result')
-var questions = document.getElementById('question')
+var questions = [
+    {
+        numb:1,
+        question: "What is JavaScript?",
+        answer: "JavaScript is a client-side and server-side scripting language inserted into HTML pages and is understood by web browsers.",
+        options: [
+            "Cascading Style Sheet",
+            "JavaScript is a client-side and server-side scripting language inserted into HTML pages and is understood by web browsers.",
+            "a general-purpose programming language that is class-based and object-oriented.",
+            "Cats Skunks and Seahorses",
+            ]
+        },
 
-var message = 'Time is up'
-var questions = [{
-    q: "What is CSS",
-    answer: [{text:"Cascading Synchronized Sheet", isCorrect: false},
-        {text:"Cascading Style Sheet", isCorrect: true},
-        {text:"That one thing you use to style", isCorrect: false},
-        {text:"Cats Skunks and Seahorses", isCorrect: false}
-        ]},
 
         {
-    q: "what is a string in JS?",
-    a: [{text:"a sequence of one or more characters that may consist of letters, numbers, or symbols.", isCorrect: true},
-        {text:"some rope to hold your website together", isCorrect: true},
-        {text:"the way your page looks", isCorrect: false},
-        {text:"this is not the correct answer", isCorrect: false}
-        ]},
+        numb:2,
+        question: "what is a string in JS?",
+        answer: "a sequence of one or more characters that may consist of letters, numbers, or symbols.", 
+        options: [
+            "a sequence of one or more characters that may consist of letters, numbers, or symbols.", 
+            "some rope to hold your website together" ,
+            "the way your page looks" ,
+            "this is not the correct answer", 
+            ]
+        },
         
         {
-    q: "Define local storage?",
-    a: [{text:"a memory card.", isCorrect: true},
-        {text:"a property that allows JavaScript sites and apps to save key-value pairs in a web browser with no expiration date.", isCorrect: true},
-        {text:"a property that allows JavaScript sites and apps to save key-value pairs in a web browser with expiration date.", isCorrect: false},
-        {text:"a property that holds a value", isCorrect: false}
-            ]},
+        numb:3,
+        question: "Define local storage?",
+        answer:  "a property that allows JavaScript sites and apps to save key-value pairs in a web browser with no expiration date.",
+        options: [
+            "a memory card.",
+            "a property that allows JavaScript sites and apps to save key-value pairs in a web browser with no expiration date.",
+            "a property that allows JavaScript sites and apps to save key-value pairs in a web browser with expiration date.",
+            "a property that holds a value",             
+            ]
+        },
 
         {
-    q: "what is a function?",
-    a: [{text:"a party for coding", isCorrect: true},
-        {text:"set of statements that performs a task or calculates a value", isCorrect: true},
-        {text:"that thing that does that one thing", isCorrect: false},
-        {text:"a statement that collects inputs but doesnt result in any output", isCorrect: false}
-            ]},
+        numb:4,
+        question: "what is a function?",
+        answer: "set of statements that performs a task or calculates a value",
+        options: [
+            "a party for coding",
+            "set of statements that performs a task or calculates a value", 
+            "that thing that does that one thing",
+            "a statement that collects inputs but doesnt result in any output", 
+            ]
+        }
 ]
 
+//get required elements
+var startbutton = document.querySelector('.start-btn')
+var quiz = document.querySelector('.quiz_box')
+var info = document.querySelector('.start-quiz')
+var result = document.querySelector('.result-box')
+var time = document.querySelector('.timer')
+var clock = document.querySelector('.timer-sec')
+var questions_txt = document.querySelector('.question-text')
+var nextQ = document.querySelector('.Next')
+var student = document.querySelector('.abbr')
+var saveResults = document.querySelector('.save-btn')
 
-function init() {
+var option1 = document.querySelector('.option1')
+var option2 = document.querySelector('.option2')
+var option3 = document.querySelector('.option3')
+var option4 = document.querySelector('.option4')
+
+var score = 0
+var quecounter = 0
+var timeLeft = 60
+
+//when start quiz button is pressed show instructions
+startbutton.addEventListener("click", function(){
+    console.log('')
+    quiz.style.display ='block';
+    info.style.display = 'none';
     countdown();
-    correctAnswers();
-    wrongAnswers();
+    for(var i = 0; i<4; i++){
+        var option = document.querySelector(`.option${i+1}`)
+        option.innerText = questions[quecounter].options[i]
+        if (questions[quecounter].options[i]== questions[quecounter].answer) {
+            option.value = true
+        } else {
+            option.value = false
+        }
+    }
+    questions_txt.innerText = questions[quecounter].question;
+    quecounter++
+})
+
+function nextQuestion(event) {
+    if ( quecounter==questions.length) {
+        clearInterval(timeInterval)
+        quiz.style.display ='none';
+        result.style.display = 'block';
+        return
+    }
+    if (event.target.value== true) {
+        score++
+    } else {
+        timeLeft-=5
+    }
+    for(var i = 0; i<4; i++){
+        var option = document.querySelector(`.option${i+1}`)
+        option.innerText = questions[quecounter].options[i]
+    }
+    questions_txt.innerText = questions[quecounter].question;
+    quecounter++
 }
+for(var i = 0; i<4; i++){
+    var option = document.querySelector(`.option${i+1}`)
+    option.addEventListener('click', nextQuestion)
+}
+var timeInterval;
 
 function countdown() {
-    var timeLeft = 60;
-
-    var timeInterval = setInterval(function (){
+    
+    timeInterval = setInterval(function (){
         if (timeLeft>=1){
-            timer.textContent = timeLeft + " time remaining.";
+            time.textContent = timeLeft + " time remaining.";
             timeLeft--;
         }
     //stop timer
-        else if(timeLeft === 1) {
-            timer.textContent = timeLeft + ' second remaining';
+        else if(timeLeft <=0) {
+            time.textContent = timeLeft + ' second remaining';
             timeLeft--;
+            quiz.style.display ='none';
+            result.style.display = 'block';
+            clearInterval(timeInterval);
         } else {
-            timer.textContent = '';
+            time.textContent = '';
             clearInterval(timeInterval);
             sendMessage();
             }
@@ -70,7 +140,13 @@ function countdown() {
 function sendMessage() {
     var timesUp =  setInterval(function(){
         if (timeLeft===0) {
-            clearInterval(timeLeft)
+            clearInterval(timeInterval)
+            quiz.style.display ='none';
+            result.style.display = 'block';
         }
     })
 }
+
+// Save related form data as an object
+saveResults
+
